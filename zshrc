@@ -131,6 +131,18 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
+function cdb () {
+	folderBack=""
+	if [[ $# > 0 && $1 > 0 ]]; then
+		for ((counter = 0; counter < $1; counter ++)) do
+			folderBack+="../"
+		done
+		cd $folderBack
+	else
+		cd ../
+	fi
+}
+
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
