@@ -120,7 +120,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Functions
 function mkt(){
-	mkdir {nmap,content,exploits,scripts}
+	mkdir {nmap,content,exploits}
 }
 
 # Extract nmap information
