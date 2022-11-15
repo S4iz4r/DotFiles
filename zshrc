@@ -5,8 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Greeting
-#echo "Welcome to Parrot OS"
 
 #Colours
 greenColour="\e[0;32m\033[1m"
@@ -51,15 +49,16 @@ bindkey $key[Down] down-line-or-history
 
 
 # Manual aliases
-alias ll='lsd -lh --group-dirs=first'
-alias la='lsd -a --group-dirs=first'
-alias l='lsd --group-dirs=first'
-alias lla='lsd -lha --group-dirs=first'
-alias ls='lsd --group-dirs=first'
+alias ll='exa -l'
+alias la='exa -A'
+alias l='exa -l'
+alias lla='exa -la'
+alias ls='exa -l'
 alias cat='/usr/bin/batcat'
 alias catn='/bin/cat'
 alias catnl='/usr/bin/batcat --paging=never'
 alias nano='nvim'
+alias dirsearch='sudo dirsearch'
 
 ##################################################
 # Fish like syntax highlighting
@@ -72,7 +71,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt histignorealldups sharehistory
-#setopt appendhistory
 
 # Use modern completion system
 autoload -Uz compinit
@@ -106,11 +104,11 @@ preexec () { print -Pn "\e]0;$1 - Parrot Terminal\a" }
 
 function settarget () {
 	target=$1
-	echo "$target" > /home/saizar/.config/bin/target
+	echo "$target" > ~/.config/bin/target
 }
 
 function cleartarget () {
-	echo '' > /home/saizar/.config/bin/target
+	echo '' > ~/.config/bin/target
 }
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -120,7 +118,15 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Functions
 function mkt(){
-	mkdir {nmap,content,exploits}
+    if [ ! $1 ]
+    then
+      echo 'you have to especify a directory name'
+    else
+      mkdir $1
+      cd $1
+	  mkdir {nmap,content,exploits}
+      cd nmap
+    fi
 }
 
 # Extract nmap information
@@ -150,20 +156,28 @@ function man() {
 }
 
 function rmk(){
-	scrub -p dod $1
-	shred -zun 10 -v $1
+  scrub -p dod $1
+  shred -zun 10 -v $1
+}
+
+function HTB(){
+  cd ~/Desktop/saizar/HTB
+}
+
+function THM(){
+  cd ~/Desktop/saizar/THM
 }
 
 function cdb () {
-	folderBack=""
-	if [[ $# > 0 && $1 > 0 ]]; then
-		for ((counter = 0; counter < $1; counter ++)) do
-			folderBack+="../"
-		done
-		cd $folderBack
-	else
-		cd ../
-	fi
+  folderBack=""
+  if [[ $# > 0 && $1 > 0 ]]; then
+    for ((counter = 0; counter < $1; counter ++)) do
+      folderBack+="../"
+    done
+    cd $folderBack
+  else
+    cd ../
+  fi
 }
 
 
